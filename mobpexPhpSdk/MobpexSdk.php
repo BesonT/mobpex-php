@@ -63,14 +63,22 @@ class  MobpexClient{
     private $methodOrUri;
     private $ignoreSSLCheck;
     private $appId;
-    private $secretKey;  
+    private $secretKey;
+    private $conn_time_out = 30;
+    private $execute_time_out = 300;  
     private $api_params = array();  
-    function MobpexClient($gateway, $methodOrUri, $ignoreSSLCheck, $appId, $secretKey) {  
+    function MobpexClient($gateway, $methodOrUri, $ignoreSSLCheck, $appId, $secretKey, $conn_time_out, $execute_time_out) {  
         $this->methodOrUri = $methodOrUri;
         $this->gateway = $gateway;
         $this->ignoreSSLCheck = $ignoreSSLCheck; 
         $this->appId = $appId;
-        $this->secretKey = $secretKey; 
+        $this->secretKey = $secretKey;
+        if(isset($conn_time_out) && is_numeric($conn_time_out)){
+        		$this->conn_time_out = $conn_time_out;
+        }
+        	if(isset($execute_time_out) && is_numeric($execute_time_out)){
+        		$this->execute_time_out = $execute_time_out;
+        	}
     }  
     function set_param($param_name, $param_vaule) {  
         $this->api_params[$param_name] = $param_vaule;  
@@ -96,6 +104,12 @@ class  MobpexClient{
     }  
     function get_secretKey(){
     	return $this->secretKey;
+    }
+    function get_conn_time_out(){
+    	return $this->conn_time_out;
+    }
+    function get_execut_time_out(){
+    	return $this->execute_time_out;
     }
     function execute($session = '') {  
         $req = new MobpexRequest;  
@@ -153,6 +167,8 @@ class MobpexRequest {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $client->get_ignoreSSLCheck()); // 对认证证书来源的检查
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $client->get_ignoreSSLCheck()); // 从证书中检查SSL加密算法是否存在
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $client->get_conn_time_out()); 
+        curl_setopt($ch, CURLOPT_TIMEOUT, $client->get_execut_time_out());  
         $postResult = curl_exec($ch);  
         if (curl_errno($ch)){  
             throw new Exception(curl_error($ch), 0);  

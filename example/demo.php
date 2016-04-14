@@ -5,7 +5,9 @@ function findChannelInfoByAppId(){
 						'/rest/v1.0/query/findChannelInfoByAppId',  //接口对应的uri
 						false,                                      //是否需要进行证书验证
 						'15122404366710489367',                     //appid15122404163671048936
-						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s');      //密钥值  LS_1ba0jd2AFBWkQVJ2bc2ck9baj4q8dav
+						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s'      //密钥值  LS_1ba0jd2AFBWkQVJ2bc2ck9baj4q8dav
+						,30									      //连接超时时间 单位秒
+						,60);   								  //请求执行超时时间 单位秒
 	$client->set_param('userId', 'long.chen-1@yeepay.com');            //设置用户id 'test@test.com' 
 	$result = $client->execute(); // 对于不需要session的api，则可以不用session参数  
 	if($client->validSign($result)){ //返回结果的验签
@@ -19,7 +21,9 @@ function unifiedOrder(){
 						'/rest/v1.0/pay/unifiedOrder',  //接口对应的uri
 						false,                                      //是否需要进行证书验证
 						'15122404366710489367',                     //appid
-						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s');      //密钥值 LS_1ba0jd2AFBWkQVJ2bc2ck9baj4q8dav
+						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s'      //密钥值 LS_1ba0jd2AFBWkQVJ2bc2ck9baj4q8dav
+						,30									      //连接超时时间 单位秒
+						,60);   								  //请求执行超时时间 单位秒
 	$client->set_param('userId', 'long.chen-1@yeepay.com');//'long.chen-1@yeepay.com'); 
 	$prePayRequest = array('productName' => "123456",
 					   'productDescription' => "Gcup",
@@ -45,7 +49,9 @@ function refund(){
 						'/rest/v1.0/pay/refund',  //接口对应的uri
 						false,                                      //是否需要进行证书验证
 						'15122404366710489367',                     //appid
-						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s');      //密钥值 LS_1ba0jd2AFBWkQVJ2bc2ck9baj4q8dav
+						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s'      //密钥值 LS_1ba0jd2AFBWkQVJ2bc2ck9baj4q8dav
+						,30									      //连接超时时间 单位秒
+						,60);   								  //请求执行超时时间 单位秒
 	$client->set_param('userId', 'long.chen-1@yeepay.com');//'long.chen-1@yeepay.com'); 
 	$prePayRequest = array("tradeNo" => "656113769613",//商户系统的支付请求流水号
     					   "amount" => "3.00",//合计金额，精确到小数点后2位
@@ -70,7 +76,9 @@ function queryPaymentOrder(){
 						'/rest/v1.0/pay/queryPaymentOrder',  //接口对应的uri
 						false,                                      //是否需要进行证书验证
 						'15122404366710489367',                     //appid
-						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s');      //密钥值
+						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s'      //密钥值
+						,30									      //连接超时时间 单位秒
+						,60);   								  //请求执行超时时间 单位秒
 	$client->set_param('userId', 'long.chen-1@yeepay.com');//'long.chen-1@yeepay.com'); 
     $client->set_param('tradeNo','656113769613'); 
 	$result = $client->execute(); // 对于不需要session的api，则可以不用session参数  
@@ -85,7 +93,9 @@ function queryRefundOrder(){
 						'/rest/v1.0/pay/queryRefundOrder',  //接口对应的uri
 						false,                                      //是否需要进行证书验证
 						'15122404366710489367',                     //appid
-						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s');      //密钥值
+						'LS_1bfs9nsAFBWqFncutrdt3du3qm2bi0s'      //密钥值
+						,30									      //连接超时时间 单位秒
+						,60);   								  //请求执行超时时间 单位秒
 	$client->set_param('userId', 'long.chen-1@yeepay.com');//'long.chen-1@yeepay.com'); 
     $client->set_param('tradeNo','656113769613'); 
     $client->set_param('refundNo','20485228279'); 
@@ -95,9 +105,9 @@ function queryRefundOrder(){
 	}
 }
 //findChannelInfoByAppId();
-unifiedOrder();
+//unifiedOrder();
 //refund();
 //queryRefundOrder();
-//queryPaymentOrder();
+queryPaymentOrder();
 
 ?>
